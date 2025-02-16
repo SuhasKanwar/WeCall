@@ -4,7 +4,7 @@ import { usePeer } from "../providers/Peer";
 
 const Room = () => {
   const socket = useSocket();
-  const { peer, createOffer, createAnswer } = usePeer();
+  const { peer, createOffer, createAnswer, setRemoteAnswer } = usePeer();
 
   const handleNewUserJoined = useCallback(
     async (data) => {
@@ -15,16 +15,24 @@ const Room = () => {
     [createOffer, socket]
   );
 
-  const handleIncomingCall = useCallback(async (data) => {
-    const { from, offer } = data;
-    console.log(`Incoming call from ${from} with offer ${offer}`);
-    const ans = createAnswer(offer);
-    socket.emit('call-accepted', { emailID: from, ans });
-  }, [createAnswer, socket]);
+  const handleIncomingCall = useCallback(
+    async (data) => {
+      const { from, offer } = data;
+    console.log("Incoming call from", from, "with offer", offer);
+      const ans = await createAnswer(offer);
+      socket.emit("call-accepted", { emailID: from, ans });
+    },
+    [createAnswer, socket]
+  );
 
-    const handleCallAccepted = useCallback(async (data) => {
-        const { ans } = data;
-    }, []);
+  const handleCallAccepted = useCallback(
+    async (data) => {
+      const { ans } = data;
+      await setRemoteAnswer(ans);
+      console.log("Call accepted", ans);
+    },
+    [setRemoteAnswer, socket]
+  );
 
   useEffect(() => {
     socket.on("user-joined", handleNewUserJoined);
@@ -36,7 +44,6 @@ const Room = () => {
       socket.off("incoming-call", handleIncomingCall);
       socket.off("call-accepted", handleCallAccepted);
     };
-
   }, [handleNewUserJoined, handleIncomingCall, handleCallAccepted, socket]);
 
   return (
