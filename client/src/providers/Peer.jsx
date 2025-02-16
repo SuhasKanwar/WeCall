@@ -2,6 +2,8 @@ import React, { useMemo } from 'react'
 
 const PeerContext = React.createContext(null);
 
+export const usePeer = () => React.useContext(PeerContext);
+
 export const PeerProvider = (props) => {
     const peer = useMemo(() => new RTCPeerConnection({
         iceServers: [
@@ -13,6 +15,13 @@ export const PeerProvider = (props) => {
             }
         ]
     }), []);
+
+    const createOffer = async () => {
+        const offer = await peer.createOffer();
+        await peer.setLocalDescription(offer);
+        return offer;
+    }
+
   return (
     <PeerContext.Provider value={{ peer }}>
       {props.children}
