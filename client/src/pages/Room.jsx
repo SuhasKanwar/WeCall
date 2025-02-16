@@ -46,11 +46,15 @@ const Room = () => {
   );
 
   const getUserMediaStream = useCallback(async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: true,
-      video: true,
-    });
-    setMyStream(stream);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: true,
+      });
+      setMyStream(stream);
+    } catch (error) {
+      console.error("Error getting media stream:", error);
+    }
   }, []);
 
   const handleNegotiation = useCallback(async () => {
@@ -77,8 +81,11 @@ const Room = () => {
     };
   }, [peer]);
 
-  useEffect(async () => {
-    await getUserMediaStream();
+  useEffect(() => {
+    async function initStream() {
+      await getUserMediaStream();
+    }
+    initStream();
   }, [getUserMediaStream]);
 
   return (

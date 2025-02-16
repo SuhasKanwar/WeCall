@@ -36,6 +36,10 @@ export const PeerProvider = (props) => {
     }
 
     const sendStream = async (stream) => {
+        if (!stream) {
+            console.error("No stream provided for sendStream");
+            return;
+        }
         const tracks = stream.getTracks();
         for (const track of tracks) {
             peer.addTrack(track, stream);
