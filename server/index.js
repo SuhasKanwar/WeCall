@@ -17,15 +17,24 @@ app.use(logger("logs.txt"));
 app.use(bodyParser.json());
 
 const emailToScoketMapping = new Map();
+const socketToEmailMapping = new Map();
 
 io.on("connection", (socket) => {
   socket.on("join-room", (data) => {
     const { roomID, emailID } = data;
     console.log(`User with email ${emailID} joined room ${roomID}`);
     emailToScoketMapping.set(emailID, socket.id);
+    socketToEmailMapping.set(socket.id, emailID);
     socket.join(roomID);
     socket.emit("joined-room", { roomID });
     socket.broadcast.to(roomID).emit("user-joined", { emailID });
+  });
+
+  socket.on("call-user", (data) => {
+    const { emailID, offer } = data;
+    const fromEmail = socketToEmailMapping.get(socket.id);
+    const socketID = emailToScoketMapping.get(emailID);
+    socket.to(socketID).emit("incoming-call", { from: fromEmail, offer });
   });
 });
 
