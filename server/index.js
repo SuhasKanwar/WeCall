@@ -16,6 +16,7 @@ app.use(cors());
 app.use(logger("logs.txt"));
 app.use(bodyParser.json());
 
+// Socket.io setup
 const emailToScoketMapping = new Map();
 const socketToEmailMapping = new Map();
 
