@@ -1,19 +1,28 @@
 import React, { useEffect, useCallback, useState } from "react";
-import ReactPlayer from 'react-player';
+import ReactPlayer from "react-player";
 import { SocketProvider, useSocket } from "../providers/Socket";
 import { usePeer } from "../providers/Peer";
 
 const Room = () => {
   const socket = useSocket();
-  const { peer, createOffer, createAnswer, setRemoteAnswer } = usePeer();
+  const {
+    peer,
+    createOffer,
+    createAnswer,
+    setRemoteAnswer,
+    sendStream,
+    remoteStream,
+  } = usePeer();
 
   const [myStream, setMyStream] = useState(null);
+  const [remoteEmailID, setRemoteEmailID] = useState();
 
   const handleNewUserJoined = useCallback(
     async (data) => {
       const { emailID } = data;
       const offer = await createOffer();
       socket.emit("call-user", { emailID, offer });
+      setRemoteEmailID(emailID);
     },
     [createOffer, socket]
   );
@@ -21,9 +30,9 @@ const Room = () => {
   const handleIncomingCall = useCallback(
     async (data) => {
       const { from, offer } = data;
-    console.log("Incoming call from", from, "with offer", offer);
       const ans = await createAnswer(offer);
       socket.emit("call-accepted", { emailID: from, ans });
+      setRemoteEmailID(from);
     },
     [createAnswer, socket]
   );
@@ -32,15 +41,22 @@ const Room = () => {
     async (data) => {
       const { ans } = data;
       await setRemoteAnswer(ans);
-      console.log("Call accepted", ans);
     },
     [setRemoteAnswer, socket]
   );
 
   const getUserMediaStream = useCallback(async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
-    setMyStream(stream) ;
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+      video: true,
+    });
+    setMyStream(stream);
   }, []);
+
+  const handleNegotiation = useCallback(async () => {
+    const localOffer = peer.localDescription;
+    socket.emit("call-user", { emailID: remoteEmailID, offer: localOffer });
+  }, [peer.localDescription, remoteEmailID, socket]);
 
   useEffect(() => {
     socket.on("user-joined", handleNewUserJoined);
@@ -54,6 +70,13 @@ const Room = () => {
     };
   }, [handleNewUserJoined, handleIncomingCall, handleCallAccepted, socket]);
 
+  useEffect(() => {
+    peer.addEventListener("track", handleNegotiation);
+    return () => {
+      peer.removeEventListener("track", handleNegotiation);
+    };
+  }, [peer]);
+
   useEffect(async () => {
     await getUserMediaStream();
   }, [getUserMediaStream]);
@@ -61,7 +84,10 @@ const Room = () => {
   return (
     <div>
       <h1>Room Page</h1>
+      <p>You are connected to: {remoteEmailID}</p>
+      <button onClick={(e) => sendStream(myStream)}>Start Video</button>
       <ReactPlayer url={myStream} playing />
+      <ReactPlayer url={remoteStream} playing />
     </div>
   );
 };
