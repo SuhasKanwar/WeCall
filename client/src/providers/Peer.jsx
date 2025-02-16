@@ -40,9 +40,13 @@ export const PeerProvider = (props) => {
             console.error("No stream provided for sendStream");
             return;
         }
+        const existingSenders = peer.getSenders();
+        const existingTracks = existingSenders.map(sender => sender.track);
         const tracks = stream.getTracks();
         for (const track of tracks) {
-            peer.addTrack(track, stream);
+            if (!existingTracks.includes(track)) {
+                peer.addTrack(track, stream);
+            }
         }
     }
 
