@@ -13,7 +13,7 @@ const Home = () => {
 
   useEffect(() => {
     socket.on('joined-room', handleRoomJoined);
-  }, [socket2]);
+  }, [socket]);
 
   const handleJoinRoom = () => {
     socket.emit("join-room", { emailID: email, roomID });
