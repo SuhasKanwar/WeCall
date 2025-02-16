@@ -23,7 +23,7 @@ export const PeerProvider = (props) => {
     }
 
   return (
-    <PeerContext.Provider value={{ peer }}>
+    <PeerContext.Provider value={{ peer, createOffer }}>
       {props.children}
     </PeerContext.Provider>
   )
