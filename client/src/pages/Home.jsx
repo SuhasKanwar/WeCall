@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSocket } from "../providers/Socket";
 
 const Home = () => {
@@ -7,9 +7,18 @@ const Home = () => {
   const [email, setEmail] = useState("");
   const [roomID, setRoomID] = useState("");
 
+  const handleRoomJoined = ({ roomID }) => {
+    console.log(`Joined room ${roomID}`);
+  }
+
+  useEffect(() => {
+    socket.on('joined-room', handleRoomJoined);
+  }, [socket2]);
+
   const handleJoinRoom = () => {
     socket.emit("join-room", { emailID: email, roomID });
   };
+
   return (
     <div className="container">
       <div>
