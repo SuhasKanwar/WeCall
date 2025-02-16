@@ -14,8 +14,16 @@ app.use(cors());
 app.use(logger('logs.txt'));
 app.use(bodyParser.json());
 
+const emailToScoketMapping = new Map();
+
 io.on('connection', (socket) => {
-    // code for signaling
+    socket.on('join-room', data => {
+        const { roomID, emailID } = data;
+        console.log(`User with email ${emailID} joined room ${roomID}`);
+        emailToScoketMapping.set(emailID, socket.id);
+        socket.join(roomID);
+        socket.broadcast.to(roomID).emit('user-joined', { emailID });
+    });
 });
 
 app.get('/', (req, res) => {
