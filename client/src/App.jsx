@@ -2,10 +2,12 @@ import { Routes, Route } from "react-router-dom";
 import Lobby from "./pages/Lobby";
 import Room from "./pages/Room";
 import Home from "./pages/Home";
+import MouseMoveEffect from "./components/MouseMoveEffect";
 
 function App() {
   return (
     <div className="App">
+      <MouseMoveEffect />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/lobby" element={<Lobby />} />
