@@ -9,8 +9,7 @@ const Room = () => {
   const [myStream, setMyStream] = useState<MediaStream | null>(null);
   const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
 
-  const handleUserJoined = useCallback(({ email, id }: { email: string; id: string }) => {
-    console.log(`Email ${email} joined room`);
+  const handleUserJoined = useCallback(({ id }: { email: string; id: string }) => {
     setRemoteSocketId(id);
   }, []);
 
@@ -34,7 +33,6 @@ const Room = () => {
         video: true,
       });
       setMyStream(stream);
-      console.log(`Incoming Call`, from, offer);
       const ans = await peer.getAnswer(offer);
       socket.emit("call:accepted", { to: from, ans });
     },
@@ -44,16 +42,16 @@ const Room = () => {
   const sendStreams = useCallback(() => {
     if (myStream) { 
       for (const track of myStream.getTracks()) {
+        if(!peer.peer) return;
         peer.peer.addTrack(track, myStream);
       }
     }
   }, [myStream]);
 
   const handleCallAccepted = useCallback(
-    ({ from, ans }: { from: string; ans: any }) => {
+    ({ ans }: { from: string; ans: any }) => {
       if (!socket) return;
       peer.setLocalDescription(ans);
-      console.log("Call Accepted!");
       sendStreams();
     },
     [socket, sendStreams]
@@ -67,8 +65,10 @@ const Room = () => {
 
   useEffect(() => {
     if (!socket) return;
+    if(!peer.peer) return;
     peer.peer.addEventListener("negotiationneeded", handleNegoNeeded);
     return () => {
+      if(!peer.peer) return;
       peer.peer.removeEventListener("negotiationneeded", handleNegoNeeded);
     };
   }, [socket, handleNegoNeeded]);
@@ -88,9 +88,9 @@ const Room = () => {
   }, [socket]);
 
   useEffect(() => {
+    if(!peer.peer) return;
     peer.peer.addEventListener("track", async (ev) => {
       const remoteStream = ev.streams;
-      console.log("GOT TRACKS!!");
       setRemoteStream(remoteStream[0]);
     });
   }, []);

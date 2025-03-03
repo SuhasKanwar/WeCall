@@ -1,5 +1,5 @@
 class PeerService {
-  private peer: RTCPeerConnection | null = null;
+  public peer: RTCPeerConnection | null = null;
 
   constructor() {
     if (!this.peer) {
