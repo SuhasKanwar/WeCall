@@ -1,35 +1,44 @@
-import React, { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, FormEvent, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSocket } from "../context/SocketProvider";
 
+interface RoomJoinData {
+  email: string;
+  room: string;
+}
+
 const Lobby = () => {
-  const [email, setEmail] = useState("");
-  const [room, setRoom] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [room, setRoom] = useState<string>("");
 
   const socket = useSocket();
   const navigate = useNavigate();
 
   const handleSubmitForm = useCallback(
-    (e) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      socket.emit("room:join", { email, room });
+      if (socket && email && room) {
+        socket.emit("room:join", { email, room });
+      }
     },
     [email, room, socket]
   );
 
   const handleJoinRoom = useCallback(
-    (data) => {
-      const { email, room } = data;
+    (data: RoomJoinData) => {
+      const { room } = data;
       navigate(`/room/${room}`);
     },
     [navigate]
   );
 
   useEffect(() => {
-    socket.on("room:join", handleJoinRoom);
-    return () => {
-      socket.off("room:join", handleJoinRoom);
-    };
+    if (socket) {
+      socket.on("room:join", handleJoinRoom);
+      return () => {
+        socket.off("room:join", handleJoinRoom);
+      };
+    }
   }, [socket, handleJoinRoom]);
 
   return (
@@ -41,7 +50,7 @@ const Lobby = () => {
           type="email"
           id="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
         />
         <br />
         <label htmlFor="room">Room Number</label>
@@ -49,10 +58,10 @@ const Lobby = () => {
           type="text"
           id="room"
           value={room}
-          onChange={(e) => setRoom(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setRoom(e.target.value)}
         />
         <br />
-        <button>Join</button>
+        <button type="submit">Join</button>
       </form>
     </div>
   );

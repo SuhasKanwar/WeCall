@@ -6,7 +6,7 @@ export default function MouseMoveEffect() {
   const { theme } = useTheme()
 
   useEffect(() => {
-    const handleMouseMove = (event) => {
+    const handleMouseMove = (event: MouseEvent) => {
       setMousePosition({ x: event.clientX, y: event.clientY })
     }
 

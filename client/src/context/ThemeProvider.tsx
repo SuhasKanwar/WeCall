@@ -1,6 +1,14 @@
+import type React from "react"
 import { createContext, useContext, useEffect, useState } from "react"
 
-const ThemeContext = createContext(undefined)
+type Theme = "light" | "dark"
+
+interface ThemeContextType {
+  theme: Theme
+  setTheme: (theme: Theme) => void
+}
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export const useTheme = () => {
   const context = useContext(ThemeContext)
@@ -10,8 +18,8 @@ export const useTheme = () => {
   return context
 }
 
-export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState("light")
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
     const root = window.document.documentElement

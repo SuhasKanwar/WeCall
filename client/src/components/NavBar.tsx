@@ -1,9 +1,18 @@
+import type React from "react"
 import { motion } from "framer-motion"
 import { Home, Settings, Bell, User } from "lucide-react"
 import { useTheme } from "../context/ThemeProvider"
 import { ThemeToggle } from "./ThemeToggle"
 
-const menuItems = [
+interface MenuItem {
+  icon: React.ReactNode
+  label: string
+  href: string
+  gradient: string
+  iconColor: string
+}
+
+const menuItems: MenuItem[] = [
   {
     icon: <Home className="h-5 w-5" />,
     label: "Home",
@@ -74,7 +83,7 @@ const sharedTransition = {
   duration: 0.5,
 }
 
-export default function MenuBar() {
+export default function NavBar() {
   const { theme } = useTheme()
 
   const isDarkTheme = theme === "dark"
