@@ -1,6 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.font-pacifico {
+  font-family: "Pacifico", cursive;
+}
 
 @layer base {
   :root {
