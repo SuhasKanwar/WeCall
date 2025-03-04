@@ -1,20 +1,23 @@
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const { Server } = require("socket.io");
-require("dotenv").config();
+import express, { Request, Response } from "express";
+import cors from "cors";
+import { Server } from "socket.io";
+import dotenv from "dotenv";
 
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const io = new Server(9001, {
-  cors: true,
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  }
 });
 
 // Middlewares
-const { logger } = require("./middlewares/logger");
+import logger from "./middlewares/logger";
 app.use(cors());
 app.use(logger("logs.txt"));
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Socket.io setup
 const emailToSocketIdMap = new Map();
@@ -48,8 +51,8 @@ io.on("connection", (socket) => {
   });
 });
 
-app.get("/", (req, res) => {
-  return res.end("WeCall server has started successfully");
+app.get("/", (req: Request, res: Response) => {
+  res.send("WeCall server has started successfully");
 });
 
 app.listen(PORT, () => {
