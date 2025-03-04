@@ -67,11 +67,11 @@ function ElegantShape({
   );
 }
 
-export default function HeroGeometric({
-  badge = "Kokonut UI",
-  title1 = "Elevate Your",
-  title2 = "Digital Vision",
-  logoUrl = "/logo.svg",
+export default function HeroSection({
+  badge,
+  title1,
+  title2,
+  logoUrl,
 }: {
   badge?: string;
   title1?: string;
