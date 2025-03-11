@@ -9,50 +9,51 @@ import {
 
 const timelineEvents = [
   {
-    year: 2018,
-    title: "Flowers & Saints Founded",
+    year: "Step 1",
+    title: "ICE Server Discovery",
     description:
-      "Our journey began with a passion for minimal design and floral artistry.",
+      "Establishing connection by discovering network details through STUN servers.",
     details:
-      "Founded by Jane Doe and John Smith, Flowers & Saints started as a small studio in Sydney's Surry Hills, combining their love for minimalist design and botanical beauty.",
+      "The WebRTC peer first contacts STUN (Session Traversal Utilities for NAT) servers to determine its public IP address and port. This helps in creating potential connection paths when peers are behind NATs or firewalls.",
   },
   {
-    year: 2019,
-    title: "First Major Exhibition",
+    year: "Step 2",
+    title: "Signaling Channel Setup",
     description:
-      "Showcased our unique blend of digital art and floral arrangements at the Sydney Design Festival.",
+      "Creating a communication channel to exchange connection information between peers.",
     details:
-      "Our exhibition 'Digital Bloom' attracted over 10,000 visitors and received critical acclaim for its innovative approach to merging technology with natural elements.",
+      "Before direct peer-to-peer connection can happen, peers need to exchange metadata through a signaling server. This typically uses WebSockets or HTTP and transmits information like session descriptions, ICE candidates, and media capabilities.",
   },
   {
-    year: 2020,
-    title: "Launch of Online Store",
+    year: "Step 3",
+    title: "SDP Exchange",
     description:
-      "Expanded our reach by bringing our creations to the digital world.",
+      "Trading Session Description Protocol data containing media capabilities.",
     details:
-      "In response to global changes, we pivoted to e-commerce, offering our unique designs and virtual floral workshops to a worldwide audience.",
+      "Peers exchange SDP (Session Description Protocol) objects that contain information about media types, codecs, and connection details. The initiating peer creates an 'offer' SDP, while the receiving peer responds with an 'answer' SDP.",
   },
   {
-    year: 2021,
-    title: "Collaboration with Top Brands",
+    year: "Step 4",
+    title: "ICE Candidate Generation",
     description:
-      "Partnered with leading lifestyle brands to create exclusive collections.",
+      "Gathering all possible network paths for establishing peer connection.",
     details:
-      "Our collaborations included limited edition prints with Australian fashion label Zimmermann and a bespoke fragrance line with Aesop.",
+      "Each peer generates ICE (Interactive Connectivity Establishment) candidates representing potential communication paths. These include local network interfaces, reflexive addresses (from STUN servers), and relay addresses (from TURN servers).",
   },
   {
-    year: 2022,
-    title: "International Recognition",
-    description: "Received the prestigious International Floral Design Award.",
+    year: "Step 5",
+    title: "Connectivity Checks",
+    description:
+      "Testing connection paths to find the optimal route between peers.",
     details:
-      "Our 'Ethereal Echoes' installation, which combined holographic projections with live flowers, won the gold medal at the Chelsea Flower Show.",
+      "Peers perform connectivity checks on all ICE candidate pairs to determine which connection paths work. They prioritize the most efficient routes, preferring direct connections when possible and falling back to TURN relay servers when necessary.",
   },
   {
-    year: 2023,
-    title: "Expansion to Physical Stores",
-    description: "Opened our first flagship store in the heart of Sydney.",
+    year: "Step 6",
+    title: "Media Transmission",
+    description: "Establishing secure peer-to-peer connection for real-time data.",
     details:
-      "Our Bondi Beach location features an immersive retail experience, blending digital installations with a curated selection of floral arrangements and lifestyle products.",
+      "Once the best connection path is established, peers begin transmitting encrypted media streams directly to each other. This includes audio, video, or data channels, all secured using DTLS (Datagram Transport Layer Security) and SRTP (Secure Real-time Transport Protocol).",
   },
 ];
 
@@ -101,10 +102,10 @@ export default function Timeline() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
-            Our Journey
+            WebRTC Connection Flow
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            The evolution of Flowers & Saints through the years
+            How peer-to-peer connections are established in real-time communications
           </p>
         </motion.div>
 

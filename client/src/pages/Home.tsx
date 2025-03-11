@@ -1,6 +1,6 @@
 import HeroSection from '../components/HeroSection'
 import NavBar from '../components/NavBar'
-import Timeline from '../components/TimeLine'
+import Timeline from '../components/Timeline'
 
 export default function Home() {
   return (
