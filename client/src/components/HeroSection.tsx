@@ -38,12 +38,15 @@ function ElegantShape({
     >
       <motion.div
         animate={{
-          y: [0, 15, 0],
+          y: [0, 15, 0, -15, 0],
+          rotate: [0, 1, 0, -1, 0],
+          scale: [1, 1.02, 1, 0.98, 1],
         }}
         transition={{
-          duration: 12,
+          duration: 8,
           repeat: Number.POSITIVE_INFINITY,
           ease: "easeInOut",
+          times: [0, 0.25, 0.5, 0.75, 1],
         }}
         style={{
           width,

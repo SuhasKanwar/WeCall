@@ -1,4 +1,6 @@
+import Footer from '../components/Footer'
 import HeroSection from '../components/HeroSection'
+import InfiniteCarusel from '../components/InfiniteCarausel'
 import NavBar from '../components/NavBar'
 import Timeline from '../components/Timeline'
 
@@ -8,6 +10,8 @@ export default function Home() {
       <NavBar />
       <HeroSection badge="WeCall" title1="Seamless Calls" title2=" Instant Connections" logoUrl="/logo.svg" />
       <Timeline />
+      <InfiniteCarusel />
+      <Footer />
     </div>
   )
 }
