@@ -186,8 +186,6 @@ function FeaturePoint({ position, isActive, label }: FeaturePointProps): JSX.Ele
 
 export default function GlobeWithFeatures(): JSX.Element {
   const [activeFeature, setActiveFeature] = useState<number | null>(null)
-
-  // Calculate positions for feature points around the globe
   const featurePositions = features.map((_, index) => {
     const angle = (index / features.length) * 2 * Math.PI
     const radius = 2.5
@@ -278,9 +276,6 @@ export default function GlobeWithFeatures(): JSX.Element {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
             >
-              <button className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors">
-                Explore All Features
-              </button>
             </motion.div>
           </div>
         </div>
