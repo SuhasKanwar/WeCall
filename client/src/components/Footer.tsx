@@ -13,13 +13,13 @@ const Footer = () => {
               voice and video calls with enhanced security.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="hover:text-blue-300 transition-colors">
+              <a href="https://www.instagram.com/suhaskanwar.bh3/" className="hover:text-blue-300 transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="hover:text-blue-300 transition-colors">
+              <a href="https://www.linkedin.com/in/suhas-kanwar-4a3a09291" className="hover:text-blue-300 transition-colors">
                 <Linkedin size={20} />
               </a>
-              <a href="#" className="hover:text-blue-300 transition-colors">
+              <a href="https://github.com/SuhasKanwar" className="hover:text-blue-300 transition-colors">
                 <Github size={20} />
               </a>
             </div>
@@ -55,7 +55,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Newsletter */}
           <div>
             <h3 className="text-xl font-semibold mb-4">Stay Updated</h3>
             <p className="mb-4 text-gray-100">Subscribe to our newsletter for the latest updates and features.</p>
@@ -75,7 +74,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="border-t border-blue-400 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p>© {new Date().getFullYear()} WeCall. All rights reserved.</p>
           <p className="mt-2 md:mt-0">Designed with ❤️ for better communication</p>
