@@ -196,8 +196,8 @@ export default function GlobeWithFeatures(): JSX.Element {
   })
 
   return (
-    <div className="relative w-full min-h-[700px] overflow-hidden bg-gradient-to-b from-background to-background/80">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.1),transparent_70%)]" />
+    <div className="relative w-full min-h-[700px] overflow-hidden">
+      <div className="absolute inset-0" />
 
       <div className="container mx-auto px-4 py-12">
         <motion.h1
