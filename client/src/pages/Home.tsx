@@ -1,3 +1,4 @@
+import { CoverText } from '../components/CoverText'
 import Footer from '../components/Footer'
 import GlobeFeatures from '../components/GlobeFeatures'
 import HeroSection from '../components/HeroSection'
@@ -13,6 +14,7 @@ export default function Home() {
       <Timeline />
       <InfiniteCarusel />
       <GlobeFeatures />
+      <CoverText />
       <Footer />
     </div>
   )
