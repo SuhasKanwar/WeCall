@@ -27,8 +27,6 @@ export default function Globe ({ className }: { className?: string }) {
         { location: [40.7128, -74.006], size: 0.1 },
       ],
       onRender: (state) => {
-        // Called on every animation frame.
-        // `state` will be an empty object, return updated params.
         state.phi = phi;
         phi += 0.01;
       },
