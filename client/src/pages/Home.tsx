@@ -4,8 +4,8 @@ import GlobeFeatures from '../components/GlobeFeatures'
 import HeroSection from '../components/HeroSection'
 import InfiniteCarusel from '../components/InfiniteCarausel'
 import NavBar from '../components/NavBar'
-import BentoGrid from '../components/BentoGrid'
 import Timeline from '../components/Timeline'
+import RotatingGlobe from '../components/RotatingGlobe'
 
 export default function Home() {
   return (
@@ -16,7 +16,7 @@ export default function Home() {
       <InfiniteCarusel />
       <GlobeFeatures />
       <CoverText />
-      <BentoGrid />
+      <RotatingGlobe />
       <Footer />
     </div>
   )
