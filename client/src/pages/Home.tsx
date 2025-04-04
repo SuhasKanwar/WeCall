@@ -6,6 +6,7 @@ import InfiniteCarusel from '../components/InfiniteCarausel'
 import NavBar from '../components/NavBar'
 import Timeline from '../components/Timeline'
 import RotatingGlobe from '../components/RotatingGlobe'
+import FeaturesSection from '../components/FeaturesSection'
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <GlobeFeatures />
       <CoverText />
       <RotatingGlobe />
+      <FeaturesSection />
       <Footer />
     </div>
   )

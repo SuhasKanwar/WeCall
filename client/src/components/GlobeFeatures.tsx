@@ -16,8 +16,8 @@ interface Feature {
 const features: Feature[] = [
   {
     id: 1,
-    name: "Global Coverage",
-    description: "Reach customers anywhere in the world with our comprehensive network spanning all continents.",
+    name: "P2P Connection",
+    description: "Direct peer-to-peer connectivity minimizes server load and reduces latency for smoother conversations.",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -29,16 +29,16 @@ const features: Feature[] = [
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <circle cx="12" cy="12" r="10" />
-        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-        <path d="M2 12h20" />
+        <path d="M9 17H7A5 5 0 0 1 7 7h2" />
+        <path d="M15 7h2a5 5 0 1 1 0 10h-2" />
+        <line x1="8" x2="16" y1="12" y2="12" />
       </svg>
     ),
   },
   {
     id: 2,
-    name: "Real-time Analytics",
-    description: "Monitor performance as it happens with powerful dashboards and instant insights.",
+    name: "Adaptive Streaming",
+    description: "Our technology automatically adjusts video quality based on network conditions for uninterrupted calls.",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -59,8 +59,8 @@ const features: Feature[] = [
   },
   {
     id: 3,
-    name: "Secure Infrastructure",
-    description: "Enterprise-grade security built in with end-to-end encryption and compliance with global standards.",
+    name: "Encrypted Media",
+    description: "All audio and video streams are secured with DTLS/SRTP encryption to protect your conversations.",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -79,8 +79,8 @@ const features: Feature[] = [
   },
   {
     id: 4,
-    name: "Scalable Solution",
-    description: "Our platform grows with your business needs, from startup to enterprise without missing a beat.",
+    name: "NAT Traversal",
+    description: "Our STUN/TURN infrastructure ensures connections can be established even through firewalls and routers.",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -92,15 +92,16 @@ const features: Feature[] = [
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="m2 18 8-8 4 4 8-8" />
-        <path d="M18 2h4v4" />
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <path d="M3 9h18" />
+        <path d="M9 21V9" />
       </svg>
     ),
   },
   {
     id: 5,
-    name: "24/7 Support",
-    description: "Our dedicated team is available around the clock to help whenever you need assistance.",
+    name: "Multi-Device Support",
+    description: "Seamlessly switch between devices during a call without dropping your connection or losing quality.",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +113,8 @@ const features: Feature[] = [
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+        <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+        <path d="M12 18h.01" />
       </svg>
     ),
   },
